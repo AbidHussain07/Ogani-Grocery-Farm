@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ogani </title>
+
+    <!-- Google Font -->
+    
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/registrations/registration-3/assets/css/registration-3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/media/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/media/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/media/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/media/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/media/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/media/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/media/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/media/css/style.css" type="text/css">
+</head>
+<style>
+    .product__item__pic__hover li:hover button {
+        background: #7fad39;
+        border-color: #7fad39;
+    }
+    
+    .product__item__pic__hover li:hover button i {
+        color: #ffffff;
+        transform: rotate(360deg);
+    }
+    
+    .product__item__pic__hover li button {
+        font-size: 16px;
+        color: #1c1c1c;
+        height: 40px;
+        width: 40px;
+        line-height: 40px;
+        text-align: center;
+        border: 1px solid #ebebeb;
+        background: #ffffff;
+        display: block;
+        border-radius: 50%;
+        -webkit-transition: all, 0.5s;
+        -moz-transition: all, 0.5s;
+        -ms-transition: all, 0.5s;
+        -o-transition: all, 0.5s;
+        transition: all, 0.5s;
+    }
+    
+    .product__item__pic__hover li button i {
+        position: relative;
+        transform: rotate(0);
+        -webkit-transition: all, 0.3s;
+        -moz-transition: all, 0.3s;
+        -ms-transition: all, 0.3s;
+        -o-transition: all, 0.3s;
+        transition: all, 0.3s;
+    }
+
+    .invoice-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .invoice-header {
+        display: flex;
+        align-items: center;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+    .invoice-header img {
+        max-width: 150px;
+        height: auto;
+    }
+    .invoice-header h1 {
+        font-size: 24px;
+        margin: 0;
+        color: #333;
+    }
+    .invoice-details {
+        margin-bottom: 20px;
+    }
+    .invoice-details h2 {
+        font-size: 20px;
+        margin: 0;
+        color: #333;
+    }
+    .invoice-details p {
+        margin: 5px 0;
+    }
+    .invoice-items table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    .invoice-items table, .invoice-items th, .invoice-items td {
+        border: 1px solid #ddd;
+    }
+    .invoice-items th, .invoice-items td {
+        padding: 10px;
+        text-align: left;
+    }
+    .invoice-items th {
+        background-color: #f4f4f4;
+    }
+    .invoice-total {
+        text-align: right;
+        font-size: 18px;
+        margin-top: 20px;
+    }
+    .invoice-footer {
+        border-top: 2px solid #eee;
+        padding-top: 20px;
+        text-align: center;
+        color: #666;
+    }
+
+</style>
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Humberger Begin -->
+    <div class="humberger__menu__overlay"></div>
+    <div class="humberger__menu__wrapper">
+        <div class="humberger__menu__logo">
+            <a href="/"><img src="/media/img/logo.png" alt=""></a>
+        </div>
+        <div class="humberger__menu__cart">
+            <ul>
+                <li><a href="/wishlist/"><i class="fa fa-heart"></i> <span>{{ wishlist.count }}</span></a></li>
+                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span class="cart-items-count">{{ request.session.cart_data_obj|length }}</span></a></li>
+            </ul>
+        </div>
+        <div class="humberger__menu__widget">
+            <div class="header__top__right__language">
+                <img src="/media/img/language.png" alt="">
+                <div>English</div>
+            </div>
+            <div class="header__top__right__auth">
+                {% if request.user.is_authenticated %}
+                <a href="/user/log-out/"><i class="fa fa-user"></i> Log-out</a>
+                {% else %}
+                <a href="/user/login/"><i class="fa fa-user"></i> Login</a>
+                {% endif %}
+            </div>
+        </div>
+        <nav class="humberger__menu__nav mobile-menu">
+            <ul>
+                <li class="{% block home %} {% endblock home %}"><a href="/">Home</a></li>
+                <li class="{% block category %} {% endblock category %}"><a href="/category/">Categories</a></li>
+                <li class="{% block cart %} {% endblock cart %}"><a href="/cart/">Cart</a></li>
+                <li class="{% block blog %} {% endblock blog %}"><a href="/blog/">Blog</a></li>
+                <li class="{% block contact %} {% endblock contact %}"><a href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
+        <div id="mobile-menu-wrap"></div>
+        <div class="header__top__right__social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+        </div>
+        <div class="humberger__menu__contact">
+            <ul>
+                <li><a href="/dashboard/"><i class="fa fa-user"></i></a>{{request.user}}</li>
+                <li>Free Shipping on Order above ₹99</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Humberger End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><a href="/dashboard/"><i class="fa fa-user"></i></a>{{request.user}}</li>
+                                <li>Free Shipping on Order above ₹99</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__right">
+                            {% comment %} <div class="header__top__right__social">
+                                <a href="/vendor/"><i class="fa fa-briefcase"></i> Become Seller</a>
+                            </div> {% endcomment %}
+                            <div class="header__top__right__language">
+                                <img src="/media/img/language.png" alt="">
+                                <div>English</div>
+                            </div>
+                            <div class="header__top__right__auth">
+                                {% if request.user.is_authenticated %}
+                                <a href="/user/log-out/"><i class="fa fa-user"></i> Log-out</a>
+                                {% else %}
+                                <a href="/user/login/"><i class="fa fa-user"></i> Login</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        {{ message }}
+                        {% endfor %}
+                    </div>
+                        {% endif %}
+                        <script>
+                            setTimeout (() => {
+                                $(".alert").alert("close");
+                            },3000)
+                        </script>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="/"><img src="/media/img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu" style="display: flex; justify-content: center;">
+                        <ul>
+                            <li class="{% block home1 %} {% endblock home1 %}"><a href="/">Home</a></li>
+                            <li class="{% block category1 %} {% endblock category1 %}"><a href="/category/">Categories</a></li>
+                            <li class="{% block cart1 %} {% endblock cart1 %}"><a href="/cart/">Cart</a></li>
+                            <li class="{% block blog1 %} {% endblock blog1 %}"><a href="/blog/">Blog</a></li>
+                            <li class="{% block contact1 %} {% endblock contact1 %}"><a href="/contact/">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul> 
+                            <li><a href="/wishlist/"><i class="fa fa-heart"></i> <span>{{ wishlist.count }}</span></a></li> 
+                            <li><a href="/cart/"><i class="fa fa-shopping-bag"></i> <span class = "cart-items-count">{{ request.session.cart_data_obj|length }}</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+        
+    </header>
+    <!-- Header Section End -->
+
+
+
+
+    {% block main %}
+
+    {% endblock main %}
+       <!-- Footer Section Begin -->
+       <footer class="footer spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="/"><img src="/media/img/logo.png" alt=""></a>
+                        </div>
+                        <ul>
+                            <li>Address: Shanti Nagar | Mira road (E)</li>
+                            <li>Phone: +91 87672 54075</li>
+                            <li>Email: ogani@natural.com</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                    <div class="footer__widget">
+                        <h6>Useful Links</h6>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">About Our Shop</a></li>
+                            <li><a href="#">Secure Shopping</a></li>
+                            <li><a href="#">Delivery infomation</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Our Sitemap</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer__widget">
+                        <h6>Join Our Newsletter Now</h6>
+                        <p>Get E-mail updates about our latest shop and special offers.</p>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your mail">
+                            <button type="submit" class="site-btn">Subscribe</button>
+                        </form>
+                        <div class="footer__widget__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text text-center"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="/" target="_blank">Ogani Owner</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
+                        <div class="footer__copyright__payment"><img src="/media/img/payment-item.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script> 
+        $('.featured__controls li').on('click', function() {
+        var filterValue = $(this).attr('data-filter');
+        $('.featured__items').isotope({ filter: filterValue });
+      });
+    </script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/media/js/jquery-3.3.1.min.js"></script>
+    <script src="/media/js/bootstrap.min.js"></script>
+    <script src="/media/js/function.js"></script>
+    <script src="/media/js/jquery.nice-select.min.js"></script>
+    <script src="/media/js/jquery-ui.min.js"></script>
+    <script src="/media/js/jquery.slicknav.js"></script>
+    <script src="/media/js/mixitup.min.js"></script>
+    <script src="/media/js/owl.carousel.min.js"></script>
+    <script src="/media/js/main.js"></script>
+
+
+
+</body>
+
+</html>

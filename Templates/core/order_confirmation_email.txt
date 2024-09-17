@@ -1,0 +1,17 @@
+Order Confirmation
+
+Dear {{request.user}},
+
+Thank you for your order!
+
+Order Details:
+Order Number: {{ order.id }}
+Total Amount: {{ total_amount }}
+
+We’re processing your order and will send you an update once it ships. If you have any questions or need further assistance, feel free to contact us.
+
+Thank you for shopping with us
+
+Best regards,
+From Ogani Fresh Farm
+

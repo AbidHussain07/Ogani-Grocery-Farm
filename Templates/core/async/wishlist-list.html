@@ -1,0 +1,66 @@
+<main class = "main" id="wishlist-list" >
+    <!-- Shoping Cart Section Begin -->
+    <section class="shoping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__table">
+                        <table class="text-center">
+                            <thead>
+                                <tr>
+                                    <th class="shoping__product">Products</th>
+                                    <th>Price</th>
+                                    <th>Stock Status</th>
+                                    <th>Add</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for w in wishlist %}
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img src="{{w.product.image.url}}" style = "height :70px" alt="">
+                                        <h5>{{w.product.title}}</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        ₹<span class="current-product-price-{{ w.product.id }}"> {{w.product.price | floatformat:2}}</span>
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        {% if w.product.in_stock %}
+                                          <i class="fa fa-check-circle" style="color: #28a745; margin-right: 5px;"></i>
+                                          <span style="font-size: 14px; font-weight: bold; color: #28a745;">In Stock</span>
+                                        {% else %}
+                                          <i class="fa fa-times-circle" style="color: #dc3545; margin-right: 5px;"></i>
+                                          <span style="font-size: 14px; font-weight: bold; color: #dc3545;">Out of Stock</span>
+                                        {% endif %}
+                                      </td>
+                                    <td >
+                                        <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ w.product.id }}">
+                                        <input type="hidden" class="product-pid-{{ w.product.id }}" value="{{ w.product.pid }}">
+                                        <input type="hidden" class="product-image-{{ w.product.id }}" value="{{ w.product.image.url }}">
+                                        <input type="hidden" class="product-id-{{ w.product.id }}" value="{{ w.product.id }}">
+                                        <input type="hidden" class="product-title-{{ w.product.id }}" value="{{ w.product.title }}">
+                                        <button class="btn btn-primary add-to-cart-btn" data-index="{{ w.product.id }}"><i class="fa fa-add"></i>Add to Cart</button>
+                                    </td>
+                                    <td >
+                                        <button style="border:none; background:none;" class="text-body delete-wishlist-product" data-wishlist-product="{{ w.id }}"><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a href="/" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+</main>

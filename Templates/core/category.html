@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+{% block category %} active {% endblock category %}
+{% block category1 %} active {% endblock category1 %}
+{% block main %}
+
+    <!-- Categories Section Begin -->
+    <section class="categories">
+        <div class="container">
+            <div class="row">
+                <div class="categories__slider owl-carousel">
+                    {% for cat in category %}
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="/media/{{cat.image}}">
+                            <h5><a href="/category/{{cat.cid}}">{{cat.title}}</a></h5>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Categories Section End -->
+
+<hr>
+{% endblock main %}

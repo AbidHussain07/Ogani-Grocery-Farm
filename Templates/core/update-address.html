@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Customer Dashboard</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    </head>
+<body>
+    <div class = "mt-5">
+<form class="col-6 mx-auto card p-3 shadow-lg" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="addressLine1">Address Line 1</label>
+        <input type="text" class="form-control" value="{{address.address1}}" name="address1" id="addressLine1">
+    </div>
+    <div class="form-group">
+        <label for="addressLine2">Address Line 2</label>
+        <input type="text" class="form-control" value="{{address.address2}}" name="address2" id="addressLine2" >
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" class="form-control"  value="{{address.phone_no}}" name="phone" id="phone" >
+    </div>
+    <div class="form-group">
+        <label for="state">State</label>
+        <input type="text" class="form-control"  value="{{address.state}}" name="state" id="state" >
+    </div>
+    <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" class="form-control"  value="{{address.city}}" name="city" id="city" >
+    </div>
+    <div class="form-group">
+        <label for="zip">ZIP Code</label>
+        <input type="text" class="form-control" value="{{address.zip_code}}" name="zip" id="zip" >
+    </div>
+    <button type="submit" class="btn btn-primary">Update Address</button>
+</form>
+</div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+{% extends "core/base.html" %}
+{% block main %}
+
+
+    <!-- Product Details Section Begin -->
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large"
+                                src="/media/{{p.image}}" alt="">
+                        </div>
+
+                        {% for img in p_image %}
+                        <div class="product__details__pic__slider owl-carousel">
+                            <img data-imgbigurl="img/product/details/product-details-2.jpg"
+                                src="/media/{{ img.p_image }}" alt="">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__text">
+                        <h3>{{p.title}}</h3>
+                        <div class="product__details__rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                            <span>(18 reviews)</span>
+                        </div>
+                        <div class="product__details__price">
+                            <div class="product__item__price current-product-price-{{ p.id }}">{{p.price}}</div>
+                        </div>
+                        <p>{{p.description}}</p>
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <input type="number" value="1" name = "" id="product-quantity" class="product-quantity-{{ p.id }}">
+                                </div>
+                            </div>
+                        </div>
+                        {% comment %} <input type="hidden" value="{{p.id}}" class="product-id" name = "" id="">
+                        <input type="hidden" value="{{p.title}}" class="product-title" name = "" id=""> 
+                        <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ p.id }}">{% endcomment %}
+                        <input type="hidden" class="product-pid-{{ p.id }}" value="{{ p.pid }}">
+                        <input type="hidden" class="product-image-{{ p.id }}" value="{{ p.image.url }}">
+                        <input type="hidden" class="product-id-{{ p.id }}" value="{{ p.id }}">
+                        <input type="hidden" class="product-title-{{ p.id }}" value="{{ p.title }}">
+                        <button type="submit" class="primary-btn add add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn"> ADD TO CART</button>
+                        {% comment %} <button type ="submit" class="primary-btn" id="add-to-cart-btn">ADD TO CART</button> {% endcomment %}
+                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                        <ul>
+                            <li><b>Availability</b> <span>In Stock</span></li>
+                            <li><b>Shipping</b> <span>01 day shipping. <samp>(Free Delivery)</samp></span></li>
+                            <li><b>Vendor</b> <span>{{p.vendor}}</span></li>
+                            <li><b>Weight</b> <span>1.0 kg</span></li>
+                            <li><b>Share on</b>
+                                <div class="share">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#tabs-1" role="tab"
+                                    aria-selected="true">Reviews <span>({{review.count}})</span></a>
+                        </ul>
+                        {% if review %}
+                        <a class="blog__sidebar__recent__item">
+                            <div class="blog__sidebar__recent__item__pic ">
+                                <div class = "card mx-auto mb-5 "><div>{{average_rating.rating | floatformat:0}}</div><div>★</div></div>
+                            </div>
+                            <div style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">
+                                Customer Ratings
+                                <div style="font-size: 16px; font-weight: bold; margin-bottom: 10px;">
+                                    Overall Rating: 
+                                    {{average_rating.rating | floatformat:1}}/5.0
+                                  </div>
+                            </div>
+                        </a>
+                        <hr>
+                        {% for r in review %}
+                        {% comment %} <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    <h6>{{r.user.username|title}}</h6>
+                                    <p>{{r.date}}</p>
+                                        <p>{{r.review}}</p>
+                                </div>
+                            </div>
+                        </div> {% endcomment %}
+                        <a class="blog__sidebar__recent__item">
+                            <div class="blog__sidebar__recent__item__pic ">
+                                <img src="/media/img/user.png"  alt="" style = "height :70px">
+                            </div>
+                            <div class="blog__sidebar__recent__item__text">
+                                <h6>{{r.user.username}}<br /></h6>
+                                <p> {{r.review}} <p>
+                                <span>{{r.date|date:"d M ,Y"}}</span>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% if products %}
+    <div class="section-title">
+        <h2>RELATED PRODUCT</h2>
+    </div>
+    {% endif %}
+        <div class="row featured__filter">
+            {% for p in products %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+                <div class="product__discount__item">
+                    <div class="product__discount__item__pic set-bg" data-setbg="/media/{{p.image}}">
+                        <div class="product__discount__percent">-{{p.get_percentage|floatformat:1}}%</div>
+                        <ul class="product__item__pic__hover">
+                            <li><button class="add-to-wishlist" data-product-item="{{p.id}}" ><i class="fa fa-heart"></i></button></li>
+                            <li><a href="/product/{{p.pid}}"><i class="fa fa-eye"></i></a></li>
+                            <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ p.id }}">
+                                <input type="hidden" class="product-pid-{{ p.id }}" value="{{ p.pid }}">
+                                <input type="hidden" class="product-image-{{ p.id }}" value="{{ p.image.url }}">
+                                <input type="hidden" class="product-id-{{ p.id }}" value="{{ p.id }}">
+                                <input type="hidden" class="product-title-{{ p.id }}" value="{{ p.title }}">
+                            <li><button class="add add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn"><i class="fa fa-shopping-cart"></i></button></li>
+
+                        </ul>
+                    </div>
+                    <div class="product__discount__item__text">
+                        <span>{{category.title}}</span>
+                        <h5><a href="#">{{p.title}}</a></h5>
+                        <div class="product__item__price">₹<KBD class="current-product-price-{{ p.id }}">{{p.price}}</KBD></div><strike>₹{{p.old_price}}</strike>
+
+                    </div>
+                </div>
+            </div>
+    
+            {% endfor %}
+        </div>
+    <!-- Product Details Section End -->
+{% endblock main%}

@@ -1,0 +1,136 @@
+{% extends "core/base.html" %}
+
+{% block main %}
+
+ <!-- Hero Section Begin -->
+    
+        <section class="hero hero-normal">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="hero__categories">
+                            <div class="hero__categories__all">
+                                <i class="fa fa-bars"></i>
+                                <span>All departments</span>
+                            </div>
+                            <ul>
+                                {% for i in category %}
+                                <li> <a href = "/category/{{i.cid}}">{{i.title}}</a></li>
+                                <hr>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="hero__search">
+                            <div class="hero__search__form">
+                                <form action="{% url 'Search' %}" method ="GET" >
+                                    <div class="hero__search__categories">
+                                        All Categories
+                                    </div>
+                                    <input type="text" placeholder="What do you need?" name="q" />
+                                    <button type="submit" class="site-btn">SEARCH</button>
+                                </form>
+                            </div>
+                            <div class="hero__search__phone">
+                                <div class="hero__search__phone__icon">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <div class="hero__search__phone__text">
+                                    <h5>+65 11.188.888</h5>
+                                    <span>support 24/7 time</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Hero Section End -->
+    
+        <!-- Breadcrumb Section Begin -->
+        <section class="breadcrumb-section set-bg" data-setbg="/media/img/breadcrumb.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="breadcrumb__text">
+                            <h2>Wishlist</h2>
+                            <div class="breadcrumb__option">
+                                <a href="/">Home</a>
+                                <span>Wishlist</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Breadcrumb Section End -->
+    <main class = "main" id="wishlist-list" >
+        <!-- Shoping Cart Section Begin -->
+        <section class="shoping-cart spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="shoping__cart__table">
+                            <table class="text-center">
+                                <thead>
+                                    <tr>
+                                        <th class="shoping__product">Products</th>
+                                        <th>Price</th>
+                                        <th>Stock Status</th>
+                                        <th>Add</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for w in wishlist %}
+                                    <tr>
+                                        <td class="shoping__cart__item">
+                                            <img src="{{w.product.image.url}}" style = "height :70px" alt="">
+                                            <h5>{{w.product.title}}</h5>
+                                        </td>
+                                        <td class="shoping__cart__price">
+                                           <div> ₹<span class="current-product-price-{{ w.product.id }}"> {{w.product.price | floatformat:2}}</span></div>
+                                        </td>
+                                        <td class="shoping__cart__quantity">
+                                            {% if w.product.in_stock %}
+                                              <i class="fa fa-check-circle" style="color: #28a745; margin-right: 5px;"></i>
+                                              <span style="font-size: 14px; font-weight: bold; color: #28a745;">In Stock</span>
+                                            {% else %}
+                                              <i class="fa fa-times-circle" style="color: #dc3545; margin-right: 5px;"></i>
+                                              <span style="font-size: 14px; font-weight: bold; color: #dc3545;">Out of Stock</span>
+                                            {% endif %}
+                                          </td>
+                                        <td >
+                                            <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ w.product.id }}">
+                                            <input type="hidden" class="product-pid-{{ w.product.id }}" value="{{ w.product.pid }}">
+                                            <input type="hidden" class="product-image-{{ w.product.id }}" value="{{ w.product.image.url }}">
+                                            <input type="hidden" class="product-id-{{ w.product.id }}" value="{{ w.product.id }}">
+                                            <input type="hidden" class="product-title-{{ w.product.id }}" value="{{ w.product.title }}">
+                                            <button class="btn btn-primary add-to-cart-btn" data-index="{{ w.product.id }}"><i class="fa fa-add"></i>Add to Cart</button>
+                                        </td>
+                                        <td >
+                                            <button style="border:none; background:none;" class="text-body delete-wishlist-product" data-wishlist-product="{{ w.id }}"><i class="fa fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="shoping__cart__btns">
+                            <a href="/" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Shoping Cart Section End -->
+
+    {% endblock main %}

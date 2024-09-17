@@ -1,0 +1,74 @@
+{% extends "core/base.html" %}
+{% block main %}
+
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <img src="/media/img/logo.png" alt="Company Logo">
+            <hr>
+            <h1>Invoice</h1>
+        </div>
+        {% comment %} <div class="invoice-details">
+            <h2>Invoice Details</h2>
+            <p><strong>Invoice Number:</strong> {{order.invoice_no}}</p>
+        </div> {% endcomment %}
+        <div class="invoice-details">
+            <h2>Billing Information</h2>
+            <p><strong>Customer Name:</strong> {{request.user}} </p>
+            <p><strong>Email:</strong> {{request.user.email}}</p>
+        </div>
+        <div class="invoice-items">
+            <h2>Items</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product_id, item in cart_data.items %}
+                    <tr>
+                        
+                        <td>
+                            <img src="{{w.product.image.url}}" style = "height :50px" alt=""> {{ item.title }}
+                        </td>
+                        <td>{{ item.qty }}</td>
+                        <td>{{item.price}}</td>
+                        <td>₹{% widthratio item.price 1 item.qty %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="invoice-total">
+            <p><strong>Subtotal Amount:</strong> ₹{{ cart_total_amount }}</p>
+        </div>
+        {% if cart_total_amount < 100 %}
+        <div class="invoice-total">
+            <p><strong>Shipping Charges:</strong> ₹100.0</p>
+        </div>
+        <div class="invoice-total">
+            <p><strong>Total Amount:</strong>₹{{ cart_total_amount|add:100.0 }}</p>
+        </div>
+        {% else %}
+        <div class="invoice-total">
+            <p><strong>Shipping Charges:</strong>FREE</p>
+        </div>
+        <div class="invoice-total">
+            <p><strong>Total Amount:</strong>₹{{ cart_total_amount }}</p>
+        </div>
+        {% endif %}
+        <div class="invoice-footer">
+            <p>Thank you for your business!</p>
+            <p>Ogani Fresh Farm | Shanti Nagar | 8767254075 | ogani@naturals.com</p>
+        </div>
+
+        <div class="mb-3" style="text-align: center;">
+            <a href="/" class="btn btn-success" style="display: inline-block;">BACK TO HOME</a>
+        </div>
+        
+    </div>
+
+    {% endblock main %}

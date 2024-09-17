@@ -1,0 +1,117 @@
+# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    # Other URL patterns...
+    path('checkout/', views.checkout, name='checkout'),
+    # Add more URLs as needed
+]
+
+
+# views.py
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Order, OrderItem
+from .forms import CheckoutForm
+
+def checkout(request):
+    if request.method == 'POST':
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            # Process the order
+            order = Order.objects.create(
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                country=form.cleaned_data['country'],
+                address1=form.cleaned_data['address1'],
+                address2=form.cleaned_data['address2'],
+                city=form.cleaned_data['city'],
+                state=form.cleaned_data['state'],
+                postcode=form.cleaned_data['postcode'],
+                phone=form.cleaned_data['phone'],
+                email=form.cleaned_data['email'],
+                order_notes=form.cleaned_data['order_notes'],
+            )
+            
+            # Assume you have a cart model or session-based cart
+            cart_items = get_cart_items(request)  # Define this function to retrieve cart items
+            for item in cart_items:
+                OrderItem.objects.create(
+                    order=order,
+                    product=item.product,
+                    quantity=item.quantity,
+                    price=item.price
+                )
+            
+            # Clear the cart
+            clear_cart(request)  # Define this function to clear the cart
+
+            messages.success(request, 'Your order has been placed successfully!')
+            return redirect('order_confirmation')  # Redirect to an order confirmation page
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = CheckoutForm()
+
+    return render(request, 'checkout.html', {'form': form})
+
+
+    # forms.py
+from django import forms
+
+class CheckoutForm(forms.Form):
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=50)
+    country = forms.CharField(max_length=50)
+    address1 = forms.CharField(max_length=100)
+    address2 = forms.CharField(max_length=100, required=False)
+    city = forms.CharField(max_length=50)
+    state = forms.CharField(max_length=50)
+    postcode = forms.CharField(max_length=20)
+    phone = forms.CharField(max_length=15)
+    email = forms.EmailField()
+    order_notes = forms.CharField(widget=forms.Textarea, required=False)
+
+
+    # models.py
+from django.db import models
+
+class Order(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    country = models.CharField(max_length=50)
+    address1 = models.CharField(max_length=100)
+    address2 = models.CharField(max_length=100, blank=True)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    postcode = models.CharField(max_length=20)
+    phone = models.CharField(max_length=15)
+    email = models.EmailField()
+    order_notes = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)  # Assuming you have a Product model
+    quantity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+
+    # views.py (add this to your existing views.py)
+def order_confirmation(request):
+    return render(request, 'order_confirmation.html')
+
+    <!-- order_confirmation.html -->
+{% extends "core/base.html" %}
+{% block main %}
+    <section class="order-confirmation spad">
+        <div class="container">
+            <div class="text-center">
+                <h2>Thank You for Your Order!</h2>
+                <p>Your order has been placed successfully. You will receive an email confirmation shortly.</p>
+                <a href="/" class="btn btn-success">Return to Home</a>
+            </div>
+        </div>
+    </section>
+{% endblock main %}
