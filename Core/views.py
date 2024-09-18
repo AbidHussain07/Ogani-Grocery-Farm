@@ -13,12 +13,12 @@ from django.core.mail import send_mail
 def home(request):
     category = Category.objects.all()
     products = Product.objects.filter(product_status = "published").order_by("category")
-    wishlist = Wishlist.objects.filter(user =request.user)
+    # wishlist = Wishlist.objects.filter(user =request.user)
     
     context = {
         'products' : products,
         'category' : category,
-        'wishlist' : wishlist,
+        # 'wishlist' : wishlist,
     }
     return render(request, 'core/home.html' , context)
 
