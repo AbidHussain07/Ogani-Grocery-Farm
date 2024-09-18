@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-ebj9id^40&&!2fr7zven_mwm!3&!9fhp6kt$d!n@1ci8b+%25h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["ogani-fresh-farm.onrender.com","127.0.0.1","localhost"]
 
 
 # Application definition
