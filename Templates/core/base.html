@@ -213,7 +213,10 @@
                             </div>
                         </div>
                     </div>
-                    {% if messages %}
+                </div>
+            </div>
+        </div>
+        {% if messages %}
                     {% for message in messages %}
                     <div class="alert alert-{{ message.tags }}" role="alert">
                         {{ message }}
@@ -223,11 +226,8 @@
                         <script>
                             setTimeout (() => {
                                 $(".alert").alert("close");
-                            },3000)
+                            },5000)
                         </script>
-                </div>
-            </div>
-        </div>
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
@@ -249,7 +249,11 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul> 
+                            {% if request.user.is_authenticated %}
                             <li><a href="/wishlist/"><i class="fa fa-heart"></i> <span>{{ wishlist.count }}</span></a></li> 
+                            {% else %}
+                            <li><a href="/wishlist/"><i class="fa fa-heart"></i> <span>0</span></a></li>
+                            {% endif %}
                             <li><a href="/cart/"><i class="fa fa-shopping-bag"></i> <span class = "cart-items-count">{{ request.session.cart_data_obj|length }}</span></a></li>
                         </ul>
                     </div>
